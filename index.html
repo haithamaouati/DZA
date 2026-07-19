@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DZA - Algeria Alerts</title>
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Iconography -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Atmospheric Rendering Layer -->
+    <canvas id="rain-canvas"></canvas>
+
+    <header class="top-bar">
+        <div class="header-container">
+            <div class="header-left">
+                <div class="logo-title">
+                    <i class="fa-solid fa-triangle-exclamation logo-icon"></i>
+                    <h1>
+                        <span class="brand-dza" data-i18n="title_dza">DZA - </span><span class="brand-suffix" data-i18n="title_suffix">Algeria Alerts</span>
+                    </h1>
+                </div>
+                <p class="description" data-i18n="description">Real‑time weather alerts from the National Meteorological Office</p>
+            </div>
+            
+            <div class="header-right">
+                <div id="live-clock" class="live-clock">
+                    <i class="fa-regular fa-clock"></i> <span>--:--:--</span>
+                </div>
+
+                <div class="header-controls">
+                    <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button id="lang-toggle" class="icon-btn" aria-label="Toggle Language">
+                        <i class="fa-solid fa-language"></i>
+                    </button>
+                    <button id="rain-toggle" class="icon-btn" aria-label="Toggle Rain Effect">
+                        <i class="fa-solid fa-cloud-showers-heavy"></i>
+                    </button>
+                    <a href="https://t.me/haithamaouati" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="Telegram Profile">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Emergency Numbers Infrastructure -->
+        <section class="emergency-section">
+            <h2 class="section-heading">
+                <i class="fa-solid fa-phone-volume"></i> <span data-i18n="emergency_title">Emergency Numbers</span>
+            </h2>
+            <div class="emergency-grid">
+                <div class="em-card">
+                    <i class="fa-solid fa-truck-medical em-icon"></i>
+                    <div class="em-details">
+                        <span class="em-label" data-i18n="em_medical">Medical Emergency</span>
+                        <span class="em-number">14</span>
+                    </div>
+                </div>
+                <div class="em-card">
+                    <i class="fa-solid fa-fire-extinguisher em-icon"></i>
+                    <div class="em-details">
+                        <span class="em-label" data-i18n="em_civil">Civil Protection</span>
+                        <span class="em-number">1021</span>
+                    </div>
+                </div>
+                <div class="em-card">
+                    <i class="fa-solid fa-life-ring em-icon"></i>
+                    <div class="em-details">
+                        <span class="em-label" data-i18n="em_coast">Coast Guard</span>
+                        <span class="em-number">1054</span>
+                    </div>
+                </div>
+                <div class="em-card">
+                    <i class="fa-solid fa-tree em-icon"></i>
+                    <div class="em-details">
+                        <span class="em-label" data-i18n="em_forest">Forest Service</span>
+                        <span class="em-number">1079</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="controls">
+            <div class="control-group">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-input" data-i18n-ph="search_placeholder" placeholder="Search by wilaya or area...">
+            </div>
+            
+            <div class="control-group">
+                <i class="fa-solid fa-map"></i>
+                <select id="area-filter">
+                    <option value="All" data-i18n="all_areas">All Areas</option>
+                    <!-- Dynamically Populated -->
+                </select>
+            </div>
+
+            <div class="control-group">
+                <i class="fa-solid fa-filter"></i>
+                <select id="severity-filter">
+                    <option value="All" data-i18n="all_severities">All Severities</option>
+                    <option value="Extreme" data-i18n="extreme">Extreme</option>
+                    <option value="Severe" data-i18n="severe">Severe</option>
+                    <option value="Moderate" data-i18n="moderate">Moderate</option>
+                    <option value="Minor" data-i18n="minor">Minor</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="results-meta">
+            <div class="alert-counter">
+                <i class="fa-solid fa-tower-broadcast"></i> 
+                <span id="total-alerts-count">0</span> 
+                <span data-i18n="alerts_displayed">Alerts Displayed</span>
+            </div>
+        </section>
+
+        <section class="alerts-grid" id="alerts-container">
+            <!-- Dynamic Injection Target -->
+            <div class="status-message" data-i18n="initializing">Initializing data sequence...</div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p><span data-i18n="source">Source: CAP Alert Feed - ONM</span></p>
+            <p>
+                <span data-i18n="developed_by">Developed with</span> 
+                <i class="fa-solid fa-heart heart-icon"></i> 
+                <span data-i18n="by">by</span> 
+                <a href="https://github.com/haithamaouati" target="_blank" rel="noopener noreferrer">Haitham Aouati</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
